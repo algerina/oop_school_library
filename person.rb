@@ -7,7 +7,7 @@ class Person
   end
 
   attr_accessor :name, age
-  attr_reader id
+  attr_reader :id
 
   def of_age?
     age >= 18
