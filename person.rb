@@ -4,6 +4,7 @@ class Person
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @corrector = Corrector.new
   end
 
   attr_accessor :name, age
@@ -15,6 +16,10 @@ class Person
 
   def can_use_services?
     age >= 18 || parent_permission == true
+  end
+
+  def validate_name
+    @name = @corrector.correct_name(@name)
   end
 
   private :is_of_age?
