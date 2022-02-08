@@ -18,6 +18,9 @@ class Person
     age >= 18 || parent_permission == true
   end
 
+  def validate_name
+    @name = @corrector.correct_name
+
 
   private :is_of_age?
 end
