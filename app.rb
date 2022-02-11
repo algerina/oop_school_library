@@ -3,27 +3,27 @@ require './student'
 require './teacher'
 require './book'
 require './rental'
+require './classroom'
 
 class App
-    def initialize
-        @books = []
-        @people = []
-        @rentals = []
-    end
+  def initialize
+    @books = []
+    @people = []
+    @rentals = []
+  end
 
-    def display_UI
-        puts 'Welcome to School Library App!\n'
-        puts 'Please choose an option by entering a number'
-        puts '1- List all books'
-        puts '2- List all people'
-        puts '3- Create a person'
-        puts '4- Create a book'
-        puts '5- Create a rental'
-        puts '6- List al rentals for a given id'
-        puts '7- exit'
-    end
+  def display_ui
+    puts 'Welcome to School Library App!\n'
+    puts 'Please choose an option by entering a number'
+    puts '1- List all books'
+    puts '2- List all people'
+    puts '3- Create a person'
+    puts '4- Create a book'
+    puts '5- Create a rental'
+    puts '6- List al rentals for a given id'
+    puts '7- exit'
+  end
 
-    
   def books_list
     @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
     puts 'books list'
@@ -40,8 +40,8 @@ class App
     print 'Name: '
     name = gets.chomp
     print 'Has parent permission? [Y/N]: '
-    has_permission = gets.chomp
-    student = Student.new(classroom: @classroom, age: age, name: name, parent_permission : parent_permission == 'Y')
+    permission = gets.chomp
+    student = Student.new(classroom: @classroom, age: age, name: name, parent_permission: permission)
     puts 'Student created successfully'
     @people.push(student)
     puts
@@ -58,7 +58,7 @@ class App
     @people.push(teacher)
     puts 'Teacher created successfully'
     puts
-    end
+  end
 
   def create_person
     puts 'Do you want to create a student(1) or a teacher(2)?'
@@ -103,7 +103,8 @@ class App
     person_id = gets.chomp.to_i
     puts 'Rentals: '
     @rentals.each do |rental|
-    puts "Date: #{rental.date} Book: #{rental.book.title} by: #{rental.book.author}" if rental.person.id == person_id
+      puts "Date: #{rental.date} Book: #{rental.book.title} by: #{rental.book.author}" if rental.person.id == person_id
+    end
   end
 
   def options
@@ -129,17 +130,7 @@ class App
     end
   end
 
-
-  
   def exit_app
     print 'Thank you for using School Library!'
   end
 end
-
-app.new.options
-
-
-
-
-
-
