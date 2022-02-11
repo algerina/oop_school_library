@@ -125,10 +125,8 @@ class App
       when '6'
         rentals_list_for_person
       else
-        print 'Thank you for using School Library!'
         break
       end
     end
   end
-  
 end
