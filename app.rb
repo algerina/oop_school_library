@@ -1,11 +1,14 @@
-require './person'
-require './student'
-require './teacher'
-require './book'
-require './rental'
-require './classroom'
+require_relative 'person'
+require_relative 'student'
+require_relative 'teacher'
+require_relative 'book'
+require_relative 'rental'
+require_relative 'classroom'
 
 class App
+
+  attr_accessor :books, :people, :rentals, :person
+
   def initialize
     @books = []
     @people = []
@@ -13,7 +16,7 @@ class App
   end
 
   def display_ui
-    puts 'Welcome to School Library App!\n'
+    print "Welcome to School Library App\n\n"
     puts 'Please choose an option by entering a number'
     puts '1- List all books'
     puts '2- List all people'
