@@ -11,7 +11,7 @@ class App
         @rentals = []
     end
 
-    def run
+    def display_UI
         puts 'Welcome to School Library App!\n'
         puts 'Please choose an option by entering a number'
         puts '1- List all books'
@@ -30,8 +30,6 @@ class App
   end
 
   def people_list
-    
-  def list_books
     @people.each { |person| puts "ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
     puts 'people list'
   end
@@ -43,7 +41,6 @@ class App
     name = gets.chomp
     print 'Has parent permission? [Y/N]: '
     has_permission = gets.chomp
-
     student = Student.new(classroom: @classroom, age: age, name: name, parent_permission : parent_permission == 'Y')
     puts 'Student created successfully'
     @people.push(student)
@@ -63,7 +60,6 @@ class App
     puts
     end
 
-    
   def create_person
     puts 'Do you want to create a student(1) or a teacher(2)?'
     user = gets.chomp
@@ -109,7 +105,41 @@ class App
     @rentals.each do |rental|
     puts "Date: #{rental.date} Book: #{rental.book.title} by: #{rental.book.author}" if rental.person.id == person_id
   end
+
+  def options
+    loop do
+      display_ui
+      input = gets.chomp
+      case input
+      when '1'
+        books_list
+      when '2'
+        people_list
+      when '3'
+        create_person
+      when '4'
+        create_book
+      when '5'
+        create_rental
+      when '6'
+        rentals_list_for_person
+      else
+        exit_app
+      end
+    end
+  end
+
+
   
+  def exit_app
+    print 'Thank you for using School Library!'
+  end
+end
+
+app.new.options
+
+
+
 
 
 
