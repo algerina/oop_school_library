@@ -27,5 +27,5 @@ class Person
     @name = @corrector.correct_name(@name)
   end
 
-  private :is_of_age?
+  private :of_age?
 end
