@@ -6,23 +6,12 @@ require_relative './rental'
 require_relative './classroom'
 require_relative './prompt'
 
+
 class App
   def initialize
     @books = []
     @people = []
     @rentals = []
-  end
-
-  def display_ui
-    puts 'Welcome to School Library App!\n'
-    puts 'Please choose an option by entering a number'
-    puts '1- List all books'
-    puts '2- List all people'
-    puts '3- Create a person'
-    puts '4- Create a book'
-    puts '5- Create a rental'
-    puts '6- List al rentals for a given id'
-    puts '7- exit'
   end
 
   def books_list
@@ -35,33 +24,29 @@ class App
     puts 'people list'
   end
 
-  def create_student
-    age = prompt('Age: ')
-    name = prompt('Name: ')
+  def create_student(name, age)
     permission = prompt('Has parent permission? [Y/N]: ')
     student = Student.new(age, name, parent_permission: permission)
-    puts 'Student created successfully'
     @people.push(student)
-    puts
+    print "Student created successfully\n\n"
   end
 
-  def create_teacher
-    name = prompt('Name: ')
+  def create_teacher(name, age)
     specialization = prompt('Specialization: ')
-    age = prompt('Age: ')
     teacher = Teacher.new(specialization, age, name)
     @people.push(teacher)
-    puts 'Teacher created successfully'
-    puts
+    print "Teacher created successfully\n\n"
   end
 
   def create_person
-    user = prompt('Do you want to create a student(1) or a teacher(2)?')
-    case user
+    option = prompt('Do you want to create a student(1) or a teacher(2)?')
+    name = prompt('Name: ')
+    age = prompt('Age: ')
+    case option
     when '1'
-      create_student
+      create_student(name, age)
     when '2'
-      create_teacher
+      create_teacher(name, age)
     end
   end
 
@@ -70,8 +55,7 @@ class App
     author = prompt('Author: ')
     book = Book.new(title, author)
     @books.push(book)
-    puts 'Book created successfully!'
-    puts
+    print "Book created successfully!\n\n"
   end
 
   def create_rental
@@ -86,8 +70,7 @@ class App
     date = prompt('Date: ')
     rental = Rental.new(date, @books[book_index], @people[person_index])
     @rentals.push(rental)
-    puts 'Rental created successfully'
-    puts
+    print "Rental created successfully\n\n"
   end
 
   def rentals_list_for_person
@@ -99,9 +82,9 @@ class App
   end
 
   def run
+    print "Welcome to School Library App!\n\n"
     loop do
-      display_ui
-      input = gets.chomp
+      input = display_ui
       case input
       when '1'
         books_list

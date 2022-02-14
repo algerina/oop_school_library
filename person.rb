@@ -14,10 +14,6 @@ class Person
     @rentals = []
   end
 
-  def add_rental(date, book)
-    Rental.new(date, book, self)
-  end
-
   def of_age?
     age >= 18
   end
