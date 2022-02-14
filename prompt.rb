@@ -3,7 +3,6 @@ def prompt(message)
   gets.chomp
 end
 
-
 def display_ui
   puts 'Please choose an option by entering a number'
   puts '1- List all books'
@@ -15,4 +14,3 @@ def display_ui
   puts '7- exit'
   gets.chomp
 end
-
