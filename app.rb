@@ -4,6 +4,7 @@ require_relative './teacher'
 require_relative './book'
 require_relative './rental'
 require_relative './classroom'
+require_relative './prompt'
 
 class App
   def initialize
@@ -35,34 +36,27 @@ class App
   end
 
   def create_student
-    print 'Age: '
-    age = gets.chomp
-    print 'Name: '
-    name = gets.chomp
-    print 'Has parent permission? [Y/N]: '
-    permission = gets.chomp
-    student = Student.new(classroom: @classroom, age: age, name: name, parent_permission: permission)
+    age = prompt('Age: ')
+    name = prompt('Name: ')
+    permission = prompt('Has parent permission? [Y/N]: ')
+    student = Student.new(age, name, parent_permission: permission)
     puts 'Student created successfully'
     @people.push(student)
     puts
   end
 
   def create_teacher
-    print 'Name: '
-    name = gets.chomp
-    print 'Specialization: '
-    specialization = gets.chomp
-    print 'Age: '
-    age = gets.chomp
-    teacher = Teacher.new(age, name, specialization)
+    name = prompt('Name: ')
+    specialization = prompt('Specialization: ')
+    age = prompt('Age: ')
+    teacher = Teacher.new(specialization, age, name)
     @people.push(teacher)
     puts 'Teacher created successfully'
     puts
   end
 
   def create_person
-    puts 'Do you want to create a student(1) or a teacher(2)?'
-    user = gets.chomp
+    user = prompt('Do you want to create a student(1) or a teacher(2)?')
     case user
     when '1'
       create_student
@@ -72,9 +66,8 @@ class App
   end
 
   def create_book
-    print 'Title: '
-    title = gets.chompprint 'Author: '
-    author = gets.chomp
+    title = prompt('Title: ')
+    author = prompt('Author: ')
     book = Book.new(title, author)
     @books.push(book)
     puts 'Book created successfully!'
@@ -90,8 +83,7 @@ class App
       puts "[#{index}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
     person_index = gets.chomp.to_i
-    print 'Date: '
-    date = gets.chomp
+    date = prompt('Date: ')
     rental = Rental.new(date, @books[book_index], @people[person_index])
     @rentals.push(rental)
     puts 'Rental created successfully'
@@ -99,8 +91,7 @@ class App
   end
 
   def rentals_list_for_person
-    print 'Person ID: '
-    person_id = gets.chomp.to_i
+    person_id = prompt('Person ID: ').to_i
     puts 'Rentals: '
     @rentals.each do |rental|
       puts "Date: #{rental.date} Book: #{rental.book.title} by: #{rental.book.author}" if rental.person.id == person_id
