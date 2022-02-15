@@ -19,6 +19,11 @@ class App
     end
   end
 
+  def write_books()
+    books_data = @books.map{ |book| {title: book.title, author: book.author}}
+    File.write('./data/books.json', JSON.dump(books_data))
+  end
+
   def run
     print "Welcome to School Library App!\n\n"
     loop do
