@@ -24,6 +24,18 @@ class App
     File.write('./data/books.json', JSON.dump(books_data))
   end
 
+  def write_people()
+    people_data = @people.map do |person|
+      case person.class.name
+      when 'Student'
+        {name: person.name, age: person.age, parent_permission: person.parent_permission}
+      when 'Teacher'
+        {name: person.name, age: person.age, specialization: person.specialization}
+      end
+    end
+    File.write('./data/people.json', JSON.dump(people_data))
+  end
+
   def run
     print "Welcome to School Library App!\n\n"
     loop do
