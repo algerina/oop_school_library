@@ -19,11 +19,11 @@ class App
   end
 
   def load_books
-    load_data('./data/books.json').each { |book| @books.push(Book.new(book['title'], book['author'])) }
+    load_data('./data/books.json')&.each { |book| @books.push(Book.new(book['title'], book['author'])) }
   end
 
   def load_people
-    load_data('./data/people.json').each do |person|
+    load_data('./data/people.json')&.each do |person|
       if person.key?('specialization')
         @people.push(Teacher.new(person['specialization'], person['age'], person['name']))
       else
@@ -33,7 +33,7 @@ class App
   end
 
   def load_rentals
-    load_data('./data/rentals.json').each do |rental|
+    load_data('./data/rentals.json')&.each do |rental|
       @rentals.push(Rental.new(rental['date'], @books[rental['book']], @people[rental['person']]))
     end
   end
