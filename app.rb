@@ -23,6 +23,9 @@ class App
   end
 
 
+  def load_rentals
+    load_data('./data/rentals.json').each { |rental| @rentals.push(Rental.new(rental['date'], @books[rental['book']], @people[rental['person']] )) }
+  end
 
   def load_people
     load_data('./data/people.json').each do |person|
@@ -39,7 +42,6 @@ class App
     File.write('./data/books.json', JSON.dump(books_data))
   end
 
-  
   def write_rentals()
     rentals_data = @rentals.map { |rental| { date: rental.date, book: @books.find_index(rental.book), person: @people.find_index(rental.person) } }
     File.write('./data/rentals.json', JSON.dump(rentals_data))
