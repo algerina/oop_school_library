@@ -22,6 +22,16 @@ class App
     load_data('./data/books.json').each { |book| @books.push(Book.new(book['title'], book['author'])) }
   end
 
+  def load_people
+    load_data('./data/people.json').each do |person|
+      if person.key?('specialization')
+        @people.push(Teacher.new(person['specialization'], person['age'], person['name']))
+      else
+        @people.push(Student.new(person['age'], person['name'], parent_permission: person['parent_permission']))
+      end
+    end
+  end
+
   def write_books()
     books_data = @books.map { |book| { title: book.title, author: book.author } }
     File.write('./data/books.json', JSON.dump(books_data))
