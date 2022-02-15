@@ -1,5 +1,4 @@
 require 'json'
-require './book'
 require_relative './prompt'
 require_relative './listing'
 require_relative './create_item'
