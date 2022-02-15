@@ -1,3 +1,4 @@
+require 'json'
 require_relative './prompt'
 require_relative './listing'
 require_relative './create_item'
@@ -10,6 +11,12 @@ class App
     @books = []
     @people = []
     @rentals = []
+  end
+
+  def load_data(file)
+    if File.exists?(file) && File.size(file) > 0
+      return JSON.parse(File.read(file))
+    end
   end
 
   def run
