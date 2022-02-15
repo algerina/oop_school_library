@@ -62,11 +62,12 @@ class App
     File.write('./data/rentals.json', JSON.dump(rentals_data))
   end
 
-  def save_data
+  def quit_app
     write_books
     write_people
     write_rentals
     print "Data saved successfully\n\n"
+    exit
   end
 
   def init_app
@@ -94,8 +95,7 @@ class App
       when '6'
         rentals_list_for_person
       else
-        save_data
-        break
+        quit_app
       end
     end
   end
