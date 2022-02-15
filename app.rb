@@ -22,11 +22,6 @@ class App
     load_data('./data/books.json').each { |book| @books.push(Book.new(book['title'], book['author'])) }
   end
 
-
-  def load_rentals
-    load_data('./data/rentals.json').each { |rental| @rentals.push(Rental.new(rental['date'], @books[rental['book']], @people[rental['person']] )) }
-  end
-
   def load_people
     load_data('./data/people.json').each do |person|
       if person.key?('specialization')
@@ -37,14 +32,15 @@ class App
     end
   end
 
+  def load_rentals
+    load_data('./data/rentals.json').each do |rental|
+      @rentals.push(Rental.new(rental['date'], @books[rental['book']], @people[rental['person']]))
+    end
+  end
+
   def write_books()
     books_data = @books.map { |book| { title: book.title, author: book.author } }
     File.write('./data/books.json', JSON.dump(books_data))
-  end
-
-  def write_rentals()
-    rentals_data = @rentals.map { |rental| { date: rental.date, book: @books.find_index(rental.book), person: @people.find_index(rental.person) } }
-    File.write('./data/rentals.json', JSON.dump(rentals_data))
   end
 
   def write_people()
@@ -59,8 +55,22 @@ class App
     File.write('./data/people.json', JSON.dump(people_data))
   end
 
-  def run
+  def write_rentals()
+    rentals_data = @rentals.map do |rental|
+      { date: rental.date, book: @books.find_index(rental.book), person: @people.find_index(rental.person) }
+    end
+    File.write('./data/rentals.json', JSON.dump(rentals_data))
+  end
+
+  def init_app
+    load_books
+    load_people
+    load_rentals
     print "Welcome to School Library App!\n\n"
+  end
+
+  def run
+    init_app
     loop do
       input = display_ui
       case input
