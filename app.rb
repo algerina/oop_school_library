@@ -1,4 +1,5 @@
 require 'json'
+require './book'
 require_relative './prompt'
 require_relative './listing'
 require_relative './create_item'
@@ -14,13 +15,15 @@ class App
   end
 
   def load_data(file)
-    if File.exists?(file) && File.size(file) > 0
-      return JSON.parse(File.read(file))
-    end
+    JSON.parse(File.read(file)) if File.exist?(file) && File.size(file).positive?
+  end
+
+  def load_books
+    load_data('./data/books.json').each { |book| @books.push(Book.new(book['title'], book['author'])) }
   end
 
   def write_books()
-    books_data = @books.map{ |book| {title: book.title, author: book.author}}
+    books_data = @books.map { |book| { title: book.title, author: book.author } }
     File.write('./data/books.json', JSON.dump(books_data))
   end
 
@@ -28,9 +31,9 @@ class App
     people_data = @people.map do |person|
       case person.class.name
       when 'Student'
-        {name: person.name, age: person.age, parent_permission: person.parent_permission}
+        { name: person.name, age: person.age, parent_permission: person.parent_permission }
       when 'Teacher'
-        {name: person.name, age: person.age, specialization: person.specialization}
+        { name: person.name, age: person.age, specialization: person.specialization }
       end
     end
     File.write('./data/people.json', JSON.dump(people_data))
