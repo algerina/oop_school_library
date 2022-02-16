@@ -18,7 +18,7 @@ describe Student do
 
   describe '#play_hooky' do
     it "Should return  ¯\(ツ)/¯" do
-      expect(student.play_hooky).to eq  "¯\(ツ)/¯"
+      expect(student.play_hooky).to eq "¯\(ツ)/¯"
     end
   end
 end
